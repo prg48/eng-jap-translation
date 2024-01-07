@@ -2,6 +2,18 @@
 
 The repository contains the data pre-processing, model training and evaluation components for the final year Individual project focused on **English-Japanese** and **Japanese-English** NLP translation. The final English-Japanese translation model can be checked in [english-japanese model link for huggingface](https://huggingface.co/Prgrg/en-ja-v4.0) and [japanese-english model link for huggingface](https://huggingface.co/Prgrg/ja-en-dataset-v3.0-subset-v3.0) for Japanese-English traslation.
 
+## Table of Contents
+
+- [Data pre-processing](#data-pre-processing)
+  - [Libraries and Storage](#libraries-and-storage)
+  - [Pre-processing Steps](#pre-processing-steps)
+  - [Dataset Versions and Splits](#dataset-versions-and-splits)
+- [Model Fine Tuning](#model-fine-tuning)
+  - [Selection of Pre-trained Models](#selection-of-pre-trained-models)
+  - [Computational Resources and Initial Experiments](#computational-resources-and-initial-experiments)
+  - [Fine-Tuning Procedure](#fine-tuning-procedure)
+  - [Training Scripts and Deployment](#training-scripts-and-deployment)
+  
 ## Data pre-processing
 
 Efficient data pre-processing is crucial for the success of NLP models. The scripts employed in the data pre-processing stages for the project can be accessed via the [data-preprocessing-scripts](/data-preprocessing-scripts/) directory. Despite initial attempts to process data locally using JparaCrawl and JESC corpuses, the considerable file sizes necessitated the use of **Google Colab Pro**'s capabilities, including **80GB RAM** and **40GB GPU**.
@@ -49,21 +61,3 @@ The fine-tuning involved several critical steps, utilizing both **PyTorch** and 
 ### Training Scripts and Deployment
 
 The project includes two main scripts for model training, [train_en_jp.py](/training-scripts/train_en_jp.py) for English-Japanese and [train_jp_en.py](/training-scripts/train_jp_en.py) for Japanese-English translations. Upon completion of the fine-tuning, the most efficient versions of the models, as determined by **BLEU** and **BERT** scores, were chosen for deployment. The final models for both English-Japanese and Japanese-English translations were deployed in huggingface and can be checked through [english-japanese model link](https://huggingface.co/Prgrg/en-ja-v4.0) and [japanese-english model link](https://huggingface.co/Prgrg/ja-en-dataset-v3.0-subset-v3.0).
-
-## Model Evaluation
-
-Evaluating the performance of our fine-tuned models is crucial to ensuring the accuracy and reliability of translations provided by the system.
-
-### Selections and Metrics
-
-Out of 15 fine-tuned versions for each language pair, models were selected based on their performance evaluated by **BLEU** and **BERT** scores. These metrics are pivotal in machine translation as they provide an objective measure of the translation's quality compared to the reference text.
-
-### Evaluation Process
-
-The evaluation was conducted systematically to ensure a thorough assessment of each model's capabilities:
-
-1. **Loading Resources**: The process commenced with the loading of the relevant dataset, checkpoint, tokenizer, and the respective fine-tuned or base model.
-2. **Tokenization**: Each dataset was tokenized to convert the text into a format suitable for the model's understanding.
-3. **Data Conversion**: The dataset split destined for evaluation was converted into a TensorFlow data format, compatible with the model's architecture.
-4. **Prediction and Decoding**: The models were then used to generate predictions from the data, which were subsequently decoded and compiled into a list for comparision.
-5. **Score Calculation**: The decoded predictions and actual labels were passed to the compute functions of **BLEU** and **BERT** scores to evaluate the model's performance quantitatively.
