@@ -1,20 +1,31 @@
-# eng-jap-translation
+# English-Japanese & Japanese-English NLP Translation
 
-The project is model training and evaluation part of the final year **Individual Project** on **English-Japanese NLP translation**. 
+The repository contains the data pre-processing, model training and evaluation components for the final year Individual project focused on **English-Japanese** and **Japanese-English** NLP translation.
 
 ## Data pre-processing
-The data pre-processing scripts can be found in [data-preprocessing-scripts](/data-preprocessing-scripts/). The data pre-processing was first tried on local PC using the [JparaCrawlv2.0](https://www.kecl.ntt.co.jp/icl/lirg/jparacrawl/), [JparaCrawlv3.0](https://www.kecl.ntt.co.jp/icl/lirg/jparacrawl/), and [JESC](https://nlp.stanford.edu/projects/jesc/) corpuses. However, due to the large sizes of the files, it could not be pre-processed on the local PC. Thus, **Goole Colab Pro** was used as it provided **80GB RAM** and **40GB GPU** capability. 
 
-The main libraries used for data pre-processing is the **huggingface API** which provided easy to use datasets library. Apart from huggingface API, **pandas** and **xmltodict** libraries were also used. The pre-processed data was stored in **Google Drive** as it provided a convenient storage to load and save data in google colab.
+Efficient data pre-processing is crucial for the success of NLP models. The scripts employed in the data pre-processing stages for the project can be accessed via the [data-preprocessing-scripts](/data-preprocessing-scripts/) directory. Despite initial attempts to process data locally using JparaCrawl and JESC corpuses, the considerable file sizes necessitated the use of **Google Colab Pro**'s capabilities, including **80GB RAM** and **40GB GPU**.
 
-The data pre-processing was conducted in two stages. Firstly, corpuses were transitioned to a **huggingface datasets** format with its original columns. The implmentation can be found in [Dataset Creation JparaCrawl.ipynb](/data-preprocessing-scripts/Dataset%20Creation%20JParaCrawl.ipynb), and [Dataset Creation JESC.ipynb](/data-preprocessing-scripts/Dataset%20Creation%20JESC.ipynb). Then for the second stage, the saved datasets were loaded, unwanted columns removed, and different versions of the datasets containing different amount of sentence pairs with **train**, **validation**, and **test** splits were saved on the basis of **score filtering** or **random subset**. The implementation for this stage can be found in [Dataset Cleaning JparaCrawl.ipynb](/data-preprocessing-scripts/Dataset%20Cleaning%20JParaCrawl.ipynb). and [Dataset Cleaning JESC.ipynb](/data-preprocessing-scripts/Dataset%20Cleaning%20JESC.ipynb).
+### Libraries and Storage
 
-Different versions of datasets were created as fine-tuning on very large datasets requires huge computational resources which can be very costly on monetary terms with several iterations of fune-tuning adding to the costs. Therefore, subset of **JParaCrawl** data were selected based on **score** of sentence quality provided in the original data itself. And for the **JESC** data, random subset was chosen. The following table shows the data that was considered for training and their respective **train**, **validation**, and **test** splits.
+The project leveraged the **Hugging Face API** for its robust datasets library, facilitating easier manipulation and preparation for the data. Alongside Higging Face, **Pandas** for data manipulation and **xmltodict** for XML parsing were integral to our pre-processing. The processed data was stored in **Google Drive**, offering a seamless integration with **Google Colab** for efficient loading and storage operations.
 
-|    | Train | Validation | Test |
+### Pre-processing Steps
+
+The data pre-processing unfolded in two primary stages:
+
+1. **Initial Conversion to Hugging Face Datasets**: The corpuses were initially converted to a Hugging Face datasets format, maintaining the original column structure. The scripts for this stage are available in [Dataset Creation JparaCrawl.ipynb](/data-preprocessing-scripts/Dataset%20Cleaning%20JParaCrawl.ipynb) and [Dataset Creation JESC.ipynb](/data-preprocessing-scripts/Dataset%20Creation%20JESC.ipynb).
+
+2. **Data Cleaning and Subset Creation**: Post conversion, datasets were further refined by removing unwanted columns and creating various subsets of the data with different sentence pair quantities. These subsets were classified into **train**, **validation**, and **test** splits, determined by either **score filtering** or selecting a **random subset**. The detailed implementation can be found in [Dataset Cleaning JparaCrawl.ipynb](/data-preprocessing-scripts/Dataset%20Cleaning%20JParaCrawl.ipynb) and [Dataset Cleaning JESC.ipynb](/data-preprocessing-scripts/Dataset%20Cleaning%20JESC.ipynb).
+
+### Dataset Versions and Splits
+
+Given the computational demands and associated costs of fine-tuning on extensive datasets, subsets of **JparaCrawl** data were curated based on the sentence quality scores from the original data. Meanwhile, a random subset was selected from the **JESC** data. The table below details the training splits and their respective sizes:
+
+|  Dataset  | Train | Validation | Test |
 |----|-------|------------|------|
-|**JParacrawlv2.0 score over 75 | 3,048,105 | 376,310 | 338,679** |
-|JparaCrawlv2.0 score over 78 | 518,832 | 64,854 | 64,855 |
-|JParaCrawlv3.0 score over 77 | 1,503,020 | 187,877 | 187,878 |
-| JESC original | 2,237,910 | 279,739 | 279,739 |
-| JESC random select | 800,000 | 100,000 | 100,000 |
+|JParacrawlv2.0 (score > 75) | 3,048,105 | 376,310 | 338,679 |
+|JparaCrawlv2.0 (score > 78) | 518,832 | 64,854 | 64,855 |
+|JParaCrawlv3.0 (score > 77) | 1,503,020 | 187,877 | 187,878 |
+| JESC (original) | 2,237,910 | 279,739 | 279,739 |
+| JESC (random select) | 800,000 | 100,000 | 100,000 |
