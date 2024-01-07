@@ -34,18 +34,36 @@ Given the computational demands and associated costs of fine-tuning on extensive
 
 Initially, the project considered the ambitious task of coding a transformer model from scratch on the seminal paper by [Vaswani et al.](https://arxiv.org/pdf/1706.03762.pdf). however, given the intricate knowledge required of the architecture, optimization techniques, and implementation details, along with the substantial computational resources and costs associated with training a model from scratch, this approach was deemed impractical. Instead the project pivoted to fine-tuning a pre-trained model to leverage state-of-the art performance while ensuring efficiency and cost-effectiveness.
 
-#### Selection of Pre-trained Models
+### Selection of Pre-trained Models
 
 Among the myriad of pre-trained models available from Tensorflow Hub, OpenAI, and Hugging Face the project selected the **Marian MT** model from Hugging Face for fine-tuning. This decision was based on the user-friendly library, robust community support, and the model's specific design and optimization for machine translation tasks. The selected models were [Helsinki-NLP/opus-mt-en-jap](https://huggingface.co/Helsinki-NLP/opus-mt-en-jap) for English-Japanese and [Helsinki-NLP/opus-mt-jap-en](https://huggingface.co/Helsinki-NLP/opus-mt-jap-en) for Japanese-English translations, both pre-trained on the **Opus dataset**.
 
-#### Computational Resources and Initial Experiments
+### Computational Resources and Initial Experiments
 
 Initial fine-tuning experiments were conducted on **Google Colab** with a small dataset to ensure feasibility before scaling up to larger datasets. Subsequent intensive training was performed on a virtual machine on **Lambda Cloud**, equipped with an **A10 24GB GPU**. Previous attempts on other cloud platforms like **Google Cloud** and **AWS** encountered issues with manual configurations and compatibility, which were efficiently resolved using Lambda Cloud's pre-installed **Lambda Stack** (Tensorflow, PyTorch and CUDA configured), facilitating a smoother execution of scripts.
 
-#### Fine-Tuning Procedure
+### Fine-Tuning Procedure
 
 The fine-tuning involved several critical steps, utilizing both **PyTorch** and **TensorFlow** libraries. The procedure began by loading the relevant dataset, tokenizer, model, and data collator. After tokenizing the dataset and converting it into a TensorFlow format, the model was compiled with appropriate **optimizer** and **loss function** settings, followed by fine-tuning for a specified number of epochs. Throughout the process, hyperparameters such as **max length**, **batch size**, **learning rate**, and **weight decay rate** were adjusted based on performance. Callbacks like **TensorBoard** and **PushToHubCallback** were employed for monitoring and versioning.
 
-#### Training Scripts and Deployment
+### Training Scripts and Deployment
 
 The project includes two main scripts for model training, [train_en_jp.py](/training-scripts/train_en_jp.py) for English-Japanese and [train_jp_en.py](/training-scripts/train_jp_en.py) for Japanese-English translations. Upon completion of the fine-tuning, the most efficient versions of the models, as determined by **BLEU** and **BERT** scores, were chosen for deployment. The final models for both English-Japanese and Japanese-English translations were deployed in huggingface and can be checked through [english-japanese model link](https://huggingface.co/Prgrg/en-ja-v4.0) and [japanese-english model link](https://huggingface.co/Prgrg/ja-en-dataset-v3.0-subset-v3.0).
+
+## Model Evaluation
+
+Evaluating the performance of our fine-tuned models is crucial to ensuring the accuracy and reliability of translations provided by the system.
+
+### Selections and Metrics
+
+Out of 15 fine-tuned versions for each language pair, models were selected based on their performance evaluated by **BLEU** and **BERT** scores. These metrics are pivotal in machine translation as they provide an objective measure of the translation's quality compared to the reference text.
+
+### Evaluation Process
+
+The evaluation was conducted systematically to ensure a thorough assessment of each model's capabilities:
+
+1. **Loading Resources**: The process commenced with the loading of the relevant dataset, checkpoint, tokenizer, and the respective fine-tuned or base model.
+2. **Tokenization**: Each dataset was tokenized to convert the text into a format suitable for the model's understanding.
+3. **Data Conversion**: The dataset split destined for evaluation was converted into a TensorFlow data format, compatible with the model's architecture.
+4. **Prediction and Decoding**: The models were then used to generate predictions from the data, which were subsequently decoded and compiled into a list for comparision.
+5. **Score Calculation**: The decoded predictions and actual labels were passed to the compute functions of **BLEU** and **BERT** scores to evaluate the model's performance quantitatively.
