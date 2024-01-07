@@ -13,7 +13,7 @@ Different versions of datasets were created as fine-tuning on very large dataset
 
 |    | Train | Validation | Test |
 |----|-------|------------|------|
-|JParacrawlv2.0 score over 75 | 3,048,105 | 376,310 | 338,679 |
+|**JParacrawlv2.0 score over 75 | 3,048,105 | 376,310 | 338,679** |
 |JparaCrawlv2.0 score over 78 | 518,832 | 64,854 | 64,855 |
 |JParaCrawlv3.0 score over 77 | 1,503,020 | 187,877 | 187,878 |
 | JESC original | 2,237,910 | 279,739 | 279,739 |
