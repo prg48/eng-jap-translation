@@ -1,6 +1,6 @@
 # English-Japanese & Japanese-English NLP Translation
 
-The repository contains the data pre-processing, model training and evaluation components for the final year Individual project focused on **English-Japanese** and **Japanese-English** NLP translation. The final English-Japanese translation model can be checked in [english-japanese model link for huggingface](https://huggingface.co/Prgrg/en-ja-v4.0) and [japanese-english model link for huggingface](https://huggingface.co/Prgrg/ja-en-dataset-v3.0-subset-v3.0) for Japanese-English translation.
+The repository contains the data pre-processing, model training and evaluation components for the final year Individual project focused on **English-Japanese** and **Japanese-English** NLP translation. The final English-Japanese translation model can be checked in [english-japanese fine-tuned model link for huggingface](https://huggingface.co/Prgrg/en-ja-v4.0) and [japanese-english fine-tuned model link for huggingface](https://huggingface.co/Prgrg/ja-en-dataset-v3.0-subset-v3.0) for Japanese-English translation.
 
 ## Table of Contents
 
@@ -148,7 +148,7 @@ A comparision of translation quality outputs between the base models and the fin
     |The ancient ruins of Machu Picchu in Peru offer breathtaking views and a glimpse into Incan history.|古 い 境 は キシび と い う 物 の 荒れ 跡 が これ を ささげ る こと に よ っ て , その 境 に 達 し た もの で あ る . (The old boundary was reached by the desolate ruins of something called Kisubi, which were dedicated to it.) | ペルーのマチュピチュピチュの古代遺跡は息をめた景色とインデントに垣間見渡せます (The ancient ruins of Peru's Machu Picchu Picchu offer breathtaking views and indented glimpses) |
 
 * **Japanese to English**: The following table shows Japanese source texts retrieved from google translate with its english translation in parenthesis, and its translation into English by the Marian MT model and the fine-tuned model. 
-    | sentence | Marian base model translation | ja-en-dataset-v3.0-subset-v3.0 |
+    | sentence | Marian base model translation | ja-en-dataset-v3.0-subset-v3.0 translation |
     |----------|--------------------------------|-------------------|
     |最新のスマートフォン モデルには、人工知能タスクを最適化するための高度なニューラル プロセッサが搭載されています。(The latest smartphone model features an advanced neural processor for optimized artificial intelligence tasks.) | For the beginning of good S land of yield yield yield yield yield yield yield yield yield yield yield yield as far to land land as far yield yield yield yield yield sail sail sail sail sailee set set set sail time time time time time time as far excellent S so need sail according to men; | The latest smartphone model is equipped with advanced neural processors to optimize artifi intelligence tasks.|
     |定期的な運動は、心臓血管の健康と全体的な幸福に大きく貢献します。 (Regular exercise contributes significantly to cardiovascular health and overall well-being.) | but the manifestationmentmentment there is good indeed to be possessed possessed by the body to the far farment of a full gift for every good pleasure in the render himself himself in the fulness of blood. | The regular exercise contributes significantly to the health and overall wellbeing of the cardiovascular. |
