@@ -6,7 +6,7 @@ from transformers import AutoTokenizer, TFAutoModelForSeq2SeqLM, DataCollatorFor
 import tensorflow as tf
 
 # load data
-main_data = load_from_disk("data/en-jp-v3.0-subset-sc-ov-77")
+main_data = load_from_disk("data/en-jp-v3.0-subset-sc-ov-78")
 
 # remove train and test data for training. We only require validation
 main_data.pop("test")
@@ -109,4 +109,4 @@ def writeResults(metric, fileName):
 
 # compute metrics and write results to file
 result = compute_metrics()
-writeResults(result, "drive/MyDrive/Language_translation/data/en-jp-marian-base-data-v3.0-subset-ov-77.txt")
+writeResults(result, "drive/MyDrive/Language_translation/data/en-jp-marian-base-data-v3.0-subset-ov-78.txt")
