@@ -112,20 +112,20 @@ The [ja-en-dataset-v3.0-subset-v3.0](https://huggingface.co/Prgrg/ja-en-dataset-
 The chosen models were evaluated using [BLEU](https://www.geeksforgeeks.org/nlp-bleu-score-for-evaluating-neural-machine-translation-python/) and [BERT](https://huggingface.co/spaces/evaluate-metric/bertscore) scores for both validation and test datasets of their respective models. The evaluation scripts can be found in [evaluation-scripts](/evaluation%20-scripts/) and the following table shows the results:
 
 * **Validation Data Metrics**
-| Model | BLEU | bert-score |
-|-------|------|------------|
-|[Eng-Jap Marian base](https://huggingface.co/Helsinki-NLP/opus-mt-en-jap) | 0.66 | 0.60 |
-|[en-ja-v4.0](https://huggingface.co/Prgrg/en-ja-v4.0) | 37.41 | 0.84 |
-| [Jap-Eng Marian base](https://huggingface.co/Helsinki-NLP/opus-mt-jap-en) | 0.14 | 0.78 |
-| [ja-en-v3.0-subset-v3.0](https://huggingface.co/Prgrg/ja-en-dataset-v3.0-subset-v3.0) | 19.68 | 0.92 |
+    | Model | BLEU | bert-score |
+    |-------|------|------------|
+    |[Eng-Jap Marian base](https://huggingface.co/Helsinki-NLP/opus-mt-en-jap) | 0.66 | 0.60 |
+    |[en-ja-v4.0](https://huggingface.co/Prgrg/en-ja-v4.0) | 37.41 | 0.84 |
+    | [Jap-Eng Marian base](https://huggingface.co/Helsinki-NLP/opus-mt-jap-en) | 0.14 | 0.78 |
+    | [ja-en-v3.0-subset-v3.0](https://huggingface.co/Prgrg/ja-en-dataset-v3.0-subset-v3.0) | 19.68 | 0.92 |
 
 * **Test Data Metrics**
-| Model | BLEU | bert-score |
-|-------|------|------------|
-|[Eng-Jap Marian base](https://huggingface.co/Helsinki-NLP/opus-mt-en-jap)| 0.68 | 0.61 |
-|[en-ja-v4.0](https://huggingface.co/Prgrg/en-ja-v4.0) | 37.71 | 0.84 |
-| [Jap-Eng Marian base](https://huggingface.co/Helsinki-NLP/opus-mt-jap-en) | 0.15 | 0.77 |
-| [ja-en-v3.0-subset-v3.0](https://huggingface.co/Prgrg/ja-en-dataset-v3.0-subset-v3.0) | 19.71 | 0.92 |
+    | Model | BLEU | bert-score |
+    |-------|------|------------|
+    |[Eng-Jap Marian base](https://huggingface.co/Helsinki-NLP/opus-mt-en-jap)| 0.68 | 0.61 |
+    |[en-ja-v4.0](https://huggingface.co/Prgrg/en-ja-v4.0) | 37.71 | 0.84 |
+    | [Jap-Eng Marian base](https://huggingface.co/Helsinki-NLP/opus-mt-jap-en) | 0.15 | 0.77 |
+    | [ja-en-v3.0-subset-v3.0](https://huggingface.co/Prgrg/ja-en-dataset-v3.0-subset-v3.0) | 19.71 | 0.92 |
 
 The fine-tuned models display remarkable improvements over their base counterparts, particularly in **BLEU** score, which is a testament to the efficacy of our fine-tuning process. The English-Japanese model shows a more pronounced enhancement in BLEU score, while the Japanese-English model exhibits a more modest gain. This suggests that although the model has improved, there may be room for further optimization in the Japanese-English translation capability. Additionally, the **BERT** scores have seen an uptick for both models, reinforcing the qualitative leap in translation accuracy.
 
