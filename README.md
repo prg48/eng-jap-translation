@@ -1,6 +1,6 @@
 # English-Japanese & Japanese-English NLP Translation
 
-The repository contains the data pre-processing, model training and evaluation components for the final year Individual project focused on **English-Japanese** and **Japanese-English** NLP translation. The final English-Japanese translation model can be checked in [english-japanese model link for huggingface](https://huggingface.co/Prgrg/en-ja-v4.0) and [japanese-english model link for huggingface](https://huggingface.co/Prgrg/ja-en-dataset-v3.0-subset-v3.0) for Japanese-English traslation.
+The repository contains the data pre-processing, model training and evaluation components for the final year Individual project focused on **English-Japanese** and **Japanese-English** NLP translation. The final English-Japanese translation model can be checked in [english-japanese model link for huggingface](https://huggingface.co/Prgrg/en-ja-v4.0) and [japanese-english model link for huggingface](https://huggingface.co/Prgrg/ja-en-dataset-v3.0-subset-v3.0) for Japanese-English translation.
 
 ## Table of Contents
 
@@ -13,6 +13,11 @@ The repository contains the data pre-processing, model training and evaluation c
   - [Computational Resources and Initial Experiments](#computational-resources-and-initial-experiments)
   - [Fine-Tuning Procedure](#fine-tuning-procedure)
   - [Training Scripts and Deployment](#training-scripts-and-deployment)
+  - [English to Japanese Model Training](#english-to-japanese-model-training)
+  - [Japanese to English Model Training](#japanese-to-english-model-training)
+    - [Japanese to English Model Selection](#japanese-to-english-model-selection)
+- [Evaluation](#evaluation)
+- [Translation Quality Examples](#translation-quality-examples)
 
 ## Data pre-processing
 
@@ -20,7 +25,7 @@ Efficient data pre-processing is crucial for the success of NLP models. The scri
 
 ### Libraries and Storage
 
-The project leveraged the **Hugging Face API** for its robust datasets library, facilitating easier manipulation and preparation for the data. Alongside Higging Face, **Pandas** for data manipulation and **xmltodict** for XML parsing were integral to our pre-processing. The processed data was stored in **Google Drive**, offering a seamless integration with **Google Colab** for efficient loading and storage operations.
+The project leveraged the **Hugging Face API** for its robust datasets library, facilitating easier manipulation and preparation for the data. Alongside Hugging Face, **Pandas** for data manipulation and **xmltodict** for XML parsing were integral to our pre-processing. The processed data was stored in **Google Drive**, offering a seamless integration with **Google Colab** for efficient loading and storage operations.
 
 ### Pre-processing Steps
 
@@ -60,7 +65,7 @@ The fine-tuning involved several critical steps, utilizing both **PyTorch** and 
 
 ### Training Scripts and Deployment
 
-The project includes two main scripts for model training, [train_en_jp.py](/training-scripts/train_en_jp.py) for English-Japanese and [train_jp_en.py](/training-scripts/train_jp_en.py) for Japanese-English translations. Upon completion of the fine-tuning, the most efficient versions of the models, as determined by **BLEU** and **BERT** scores, were chosen for deployment. The final models for both English-Japanese and Japanese-English translations were deployed in huggingface and can be checked through [english-japanese model link](https://huggingface.co/Prgrg/en-ja-v4.0) and [japanese-english model link](https://huggingface.co/Prgrg/ja-en-dataset-v3.0-subset-v3.0).
+The project includes two main scripts for model training, [train_en_jp.py](/training-scripts/train_en_jp.py) for English-Japanese and [train_jp_en.py](/training-scripts/train_jp_en.py) for Japanese-English translations. Upon completion of the fine-tuning, the most efficient versions of the models, as determined by **BLEU** and **BERT** scores, were chosen for deployment. The final models for both English-Japanese and Japanese-English translations were deployed in huggingface and can be checked through [english-japanese fine-tuned model link](https://huggingface.co/Prgrg/en-ja-v4.0) and [japanese-english fine-tuned model link](https://huggingface.co/Prgrg/ja-en-dataset-v3.0-subset-v3.0).
 
 ### English to Japanese Model Training
 
@@ -98,7 +103,7 @@ The corresponding validataion vs loss graph for all the models in different sess
 
 Each model's loss pattern provides insignt into its learning efficacy and generalization ability. Notably, the [ja-en-dataset-v3.0-subset-v3.0](https://huggingface.co/Prgrg/ja-en-dataset-v3.0-subset-v3.0) model exhibited a desirable decrease in both training and validation loss, without the pronounced overfitting observed in other iterations.
 
-#### Japanese-English Model Selection
+#### Japanese to English Model Selection
 
 The [ja-en-dataset-v3.0-subset-v3.0](https://huggingface.co/Prgrg/ja-en-dataset-v3.0-subset-v3.0) model emerged as the final choice due to its:
 
