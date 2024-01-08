@@ -13,7 +13,7 @@ The repository contains the data pre-processing, model training and evaluation c
   - [Computational Resources and Initial Experiments](#computational-resources-and-initial-experiments)
   - [Fine-Tuning Procedure](#fine-tuning-procedure)
   - [Training Scripts and Deployment](#training-scripts-and-deployment)
-  
+
 ## Data pre-processing
 
 Efficient data pre-processing is crucial for the success of NLP models. The scripts employed in the data pre-processing stages for the project can be accessed via the [data-preprocessing-scripts](/data-preprocessing-scripts/) directory. Despite initial attempts to process data locally using JparaCrawl and JESC corpuses, the considerable file sizes necessitated the use of **Google Colab Pro**'s capabilities, including **80GB RAM** and **40GB GPU**.
@@ -61,3 +61,46 @@ The fine-tuning involved several critical steps, utilizing both **PyTorch** and 
 ### Training Scripts and Deployment
 
 The project includes two main scripts for model training, [train_en_jp.py](/training-scripts/train_en_jp.py) for English-Japanese and [train_jp_en.py](/training-scripts/train_jp_en.py) for Japanese-English translations. Upon completion of the fine-tuning, the most efficient versions of the models, as determined by **BLEU** and **BERT** scores, were chosen for deployment. The final models for both English-Japanese and Japanese-English translations were deployed in huggingface and can be checked through [english-japanese model link](https://huggingface.co/Prgrg/en-ja-v4.0) and [japanese-english model link](https://huggingface.co/Prgrg/ja-en-dataset-v3.0-subset-v3.0).
+
+## Evaluation
+
+Both models for English-Japanese and Japanese-English translations are **Marian MT** models. The models were iteratively trained for small epochs on the datasets. The English-Japanese base Marian model was trained in 4 separate sessions. They are as shown in the following table:
+
+| model | base model | initial lr | optimizer | lr decay | epochs | dataset |
+|-------|------------|------------|----------|--------|------|--------|
+| ja-en-v1.0| Marian base | 0.0005 | Adam W | Poly-Decay | 2 | JParaCrawlv2.0 (score > 78) |
+| ja-en-v2.0| ja-en-v1.0 | 0.0005 | Adam W | Poly-Decay | 2 | JParaCrawlv2.0 (score > 78) |
+| ja-en-v3.0| ja-en-v2.0 | 0.0005 | Adam W | Poly-Decay | 4 | JParaCrawlv2.0 (score > 78) |
+| ja-en-v4.0| ja-en-v3.0 | 0.0005 | Adam W | Poly-Decay | 10 | JParaCrawlv2.0 (score > 78) |
+
+The graph of training vs validation loss for all the training sessions combined is as follows:
+
+| ![eng-jap train vs validation loss](/images/eng-jap-training-and-validation-loss.png) |
+| :------------------------------------------------: |
+| Eng-Jap train vs validation loss                              |
+
+Throughout the training process, the training loss decreases steadily, indicating that the model is improving its understanding of the dataset and learning to map English sentences to their corresponding Japanese translations. On the other hand, the validation loss follows a more complex pattern. Initially, the validation loss decreases, reaching its lowest point at epoch 4. This suggests that the model is generalizing well to unseen data. However, between epochs 4 and 5, the validation loss increases dramatically, which could be a sign of overfitting. After epoch 9, the validation loss starts to decrease again, and the trend continues until the end of the training process, although with some fluctuations. This indicates that the model is once again learning to generalize better the validation dataset, although not as effectively as during the initial epochs. However, even though the model was generalizing well initially, the base model had a very low BLEU score on the validation dataset which will be discussed in later section. However, after 18 epochs, the quality of translation as well as the BLEU score and BERT score improved significantly. Thus, the final version of the model after 18 epochs of fine-tuning was chosen as the final model for the English-Japanese Translation.
+
+However, unline the English-Japanese model, the Japanese-English model required a lot of experimentation to get the desired results. The model was trained on 4 our of 5 datasets mentioned in [Datasets versions and splits](#dataset-versions-and-splits). As can be seen in the following table, it was trained for a total of 11 sessions with some sessions running on different hyper-parameters, base models and datasets.
+
+| model | base model | initial lr | optimizer | lr decay | epochs | dataset |
+|------|------|-------|------|------|-------|------|
+| ja-en-v1.0 | Marian base | 0.0005 | Adam W | PolyDecay | 2 | JparaCrawlv2.0 (score > 78) |
+| ja-en-JESC-v1.0 | Marian base | 0.0005 | Adam W | PolyDecay | 4 | JESC (random select) |
+| ja-en-JESC-v2.0 | ja-en-JESC-v1.0 | 0.0005 | Adam W | PolyDecay | 4 | JESC (random select) |
+| ja-en-JESC-full-v1.0 | Marian base | 0.0005 | Adam W | PolyDecay | 6 | JESC (original) |
+| ja-en-JESC-v3.0 | ja-en-JESC-v2.0  | 0.0005 | Adam W | PolyDecay | 6 | JESC (random select) |
+| ja-en-JESC-v3.0-wth-lr-decay | ja-en-JESC-v2.0  | 0.0001 | Adam W | PolyDecay | 10 | JESC (random select) |
+| ja-en-JESC-v4.0-wth-lr-decay | ja-en-JESC-v3.0-wth-lr-decay  | 0.0002 | Adam W | PolyDecay | 8 | JESC (random select) |
+| ja-en-JESC-v5.0-wth-lr-decay | ja-en-JESC-v4.0-wth-lr-decay  | 0.0001 | Adam W | PolyDecay | 6 | JESC (random select) |
+| ja-en-dataset-v3.0-subset-v1.0 | Marian base  | 0.0005 | Adam | LinWarmup-CosSchedule | 2 | JParaCrawlv3.0 (score > 77) |
+| ja-en-dataset-v3.0-subset-v2.0 | ja-en-dataset-v3.0-subset-v1.0 | 0.0005 | Adam | LinWarmup-CosSchedule | 7 | JParaCrawlv3.0 (score > 77) |
+| ja-en-dataset-v3.0-subset-v3.0 | ja-en-dataset-v3.0-subset-v2.0 | 0.0001 | Adam | LinWarmup-CosSchedule | 1 | JParaCrawlv3.0 (score > 77) |
+
+The graphs of training vs validation loss for japanese-english sessions which can be grouped in 5 separate sessions is shown in the figure below:
+
+| ![jap-eng train vs validation loss](/images/jap-eng-training-and-validation-loss.png) |
+| :------------------------------------------------: |
+| Jap-Eng train vs validation losses for different model sessions                              |
+
+1. **JParaCrawl v2.0 score over 78**: The training loss decreases significantly, but the validation loss is high and increases over time. This is a sign of overfitting, as the model is performing well on the training data but not generalizing well 
